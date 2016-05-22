@@ -12,20 +12,21 @@ import javax.imageio.ImageIO;
 public class Program {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-
+		//Image utilisé
 		File img = new File("res/lena_gray.gif");
 		
 		BufferedImage in;
 		try {
+			//Lecture de l'image
 			in = ImageIO.read(img);
 			BufferedImage newImage = ImageIO.read(img);
 			List<int[]> Plateau = new ArrayList<int[]>();
 			
-			System.out.println(newImage.getHeight()+" "+newImage.getWidth());
+			System.out.println("Image size: x:"+newImage.getWidth()+" y:"+newImage.getHeight());
 			
-			int dalleW=2; int dalleH=2;
+			//Taille dalle de decoupe de l'image
+			int dalleW=8; int dalleH=8;
+			//Decoupe de l'image en dalles
 			for(int dallesY=0 ; dallesY<newImage.getHeight(); dallesY+=dalleH) {
 				for(int dallesX=0; dallesX<newImage.getWidth(); dallesX+=dalleW) {
 					int[] dalle = new int[dalleW*dalleH];
@@ -33,13 +34,14 @@ public class Program {
 					Plateau.add(newImage.getData().getPixels(dallesX, dallesY, dalleW, dalleH, dalle));
 				}
 			}
-
+			
+			//Parcours des dalles de l'image (de gauche à droite, de haut en bas)
 			System.out.println(Plateau.size());
 			int nbPlateau=0;
 			for (int[] dalle: Plateau) {
 				int nbPixel=0;
 				for (int pixel: dalle) {
-					System.out.println(nbPlateau+" - "+nbPixel+") "+pixel);
+					System.out.println("Dalle n: "+nbPlateau+" - Position du pixel: "+nbPixel+"° Valeur du pixel: "+pixel);
 					nbPixel++;
 				}
 				nbPlateau++;
